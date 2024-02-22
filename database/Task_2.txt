@@ -1,0 +1,278 @@
+Table : Employee
+Query : select * from Employee;
++-----+----------+------------+------------+--------------------+-----------+
+| eid | empname  | department | contactno  | emailid            | empheadid |
++-----+----------+------------+------------+--------------------+-----------+
+| 101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+| 102 | Priya    | E-104      | 1234567890 | priya@yahoo.com    |       103 |
+| 103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+| 104 | Rahul    | E-102      | 1234567890 | rahul@yahoo.com    |       105 |
+| 105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
++
+
+Table : EmpDept
+Query : select * from EmpDept;
++--------+--------------+----------+----------+
+| DeptId | DeptName     | Dept_off | DeptHead |
++--------+--------------+----------+----------+
+| E-101  | HR           | Monday   |      105 |
+| E-102  | Development  | Tuesday  |      101 |
+| E-103  | Hous Keeping | Saturday |      103 |
+| E-104  | Sales        | Sunday   |      104 |
+| E-105  | Purchage     | Tuesday  |      104 |
++--------+--------------+----------+----------+
+
+Table : EmpSalary
+Query : select * from EmpSalary;
++-------+--------+-------------+
+| EmpId | Salary | IsPermanent |
++-------+--------+-------------+
+|   101 |   2000 | Yes         |
+|   102 |  10000 | Yes         |
+|   103 |   5000 | No          |
+|   104 |   1900 | Yes         |
+|   105 |   2300 | Yes         |
++-------+--------+-------------+
+
+Table : Project
+Query : select * from Project;
++-----------+----------+
+| ProjectId | Duration |
++-----------+----------+
+| p-1       |       23 |
+| p-2       |       15 |
+| p-3       |       45 |
+| p-4       |        2 |
+| p-5       |       30 |
++-----------+----------+
+
+Table : Country
+Query : select * from Country;
++-----+----------+
+| cid | cname    |
++-----+----------+
+| c-1 | india    |
+| c-2 | USA      |
+| c-3 | china    |
+| c-4 | pakistan |
+| c-5 | russia   |
++-----+----------+
+
+Table : ClientTable
+Query : select * from ClientTable;
++----------+------------+------+
+| clientid | clientname | cid  |
++----------+------------+------+
+| cl-1     | ABC Group  | c-1  |
+| cl-2     | PQR        | c-1  |
+| cl-3     | XYZ        | c-2  |
+| cl-4     | tech altum | c-3  |
+| cl-5     | mnp        | c-5  |
++----------+------------+------+
+
+Table : EmpProject
+Query : select * from EmpProject;
++-------+-----------+----------+-----------+---------+
+| empid | projectid | clientid | Startyear | Endyear |
++-------+-----------+----------+-----------+---------+
+|   101 | p-1       | Cl-1     |      2010 |    2010 |
+|   102 | p-2       | Cl-2     |      2010 |    2012 |
+|   103 | p-1       | Cl-3     |      2013 |    NULL |
+|   104 | p-4       | Cl-1     |      2014 |    2015 |
+|   105 | p-4       | Cl-5     |      2015 |    NULL |
++-------+-----------+----------+-----------+---------+
+
+
+                                =: QUERY :=
+
+Que 1 : Select the detail of the employee whose name start with P.
+query : select * from Employee where empname LIKE 'p%';
+O/P :
++-----+---------+------------+------------+-----------------+-----------+
+| eid | empname | department | contactno  | emailid         | empheadid |
++-----+---------+------------+------------+-----------------+-----------+
+| 102 | Priya   | E-104      | 1234567890 | priya@yahoo.com |       103 |
++-----+---------+------------+------------+-----------------+-----------+
+
+Que 2 : How many permanent candidate take salary more than 5000.
+query : select * from EmpSalary where IsPermanent='Yes' and Salary >5000;
+O/P:
++-------+--------+-------------+
+| EmpId | Salary | IsPermanent |
++-------+--------+-------------+
+|   102 |  10000 | Yes         |
++-------+--------+-------------+
+
+Que 3: Select the detail of employee whose emailed is in Gmail.
+query : select * from Employee where emailid LIKE '%gmail%';
+O/P :
++-----+----------+------------+------------+--------------------+-----------+
+| eid | empname  | department | contactno  | emailid            | empheadid |
++-----+----------+------------+------------+--------------------+-----------+
+| 101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+| 103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+| 105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
++-----+----------+------------+------------+--------------------+-----------+
+
+Que 4: Select the details of the employee who work either for department E-104 or E-102.
+query : select * from Employee where department='E-104' OR 'E-102';
++-----+---------+------------+------------+-----------------+-----------+
+| eid | empname | department | contactno  | emailid         | empheadid |
++-----+---------+------------+------------+-----------------+-----------+
+| 102 | Priya   | E-104      | 1234567890 | priya@yahoo.com |       103 |
++-----+---------+------------+------------+-----------------+-----------+
+        select * from Employee where department='E-102' OR 'E-104';
++-----+---------+------------+------------+-----------------+-----------+
+| eid | empname | department | contactno  | emailid         | empheadid |
++-----+---------+------------+------------+-----------------+-----------+
+| 104 | Rahul   | E-102      | 1234567890 | rahul@yahoo.com |       105 |
++-----+---------+------------+------------+-----------------+-----------+
+
+Que 5 : What is the department name for DeptID E-102?
+query : select DeptName from EmpDept where DeptId='E-102';
+O/P :
++-------------+
+| DeptName    |
++-------------+
+| Development |
++-------------+
+
+Que 6 : What is total salary that is paid to permanent employees?
+query : select sum(Salary) from EmpSalary where IsPermanent='Yes';
+O/P:
++-------------+
+| sum(Salary) |
++-------------+
+|       16200 |
++-------------+
+
+Que 7 : List name of all employees whose name ends with a.
+query : select * from Employee where empname LIKE '%a';
+O/P :
++-----+---------+------------+------------+-----------------+-----------+
+| eid | empname | department | contactno  | emailid         | empheadid |
++-----+---------+------------+------------+-----------------+-----------+
+| 101 | Isha    | E-101      | 1234567890 | isha@gmail.com  |       105 |
+| 102 | Priya   | E-104      | 1234567890 | priya@yahoo.com |       103 |
+| 103 | Neha    | E-101      | 1234567890 | neha@gmail.com  |       101 |
++-----+---------+------------+------------+-----------------+-----------+
+
+Que 8 : List the number of department of employees in each project.
+query :select count(empid) as Employee, ProjectId from EmpProject group by ProjectId;
+O/P :
++----------+-----------+
+| Employee | ProjectId |
++----------+-----------+
+|        2 | p-1       |
+|        1 | p-2       |
+|        2 | p-4       |
++----------+-----------+
+
+Que 9 :  How many project started in year 2010.
+query : select * from EmpProject where Startyear='2010';
+O/P:
++-------+-----------+----------+-----------+---------+
+| empid | projectid | clientid | Startyear | Endyear |
++-------+-----------+----------+-----------+---------+
+|   101 | p-1       | Cl-1     |      2010 |    2010 |
+|   102 | p-2       | Cl-2     |      2010 |    2012 |
++-------+-----------+----------+-----------+---------+
+
+Que 10: How many project started and finished in the same year.
+query : select * from EmpProject where Startyear=Endyear;
+O/P:
++-------+-----------+----------+-----------+---------+
+| empid | projectid | clientid | Startyear | Endyear |
++-------+-----------+----------+-----------+---------+
+|   101 | p-1       | Cl-1     |      2010 |    2010 |
++-------+-----------+----------+-----------+---------+
+
+Que 11:Select the name of the employee whose name's 3rd character is 'h'.
+query :select * from Employee where empname LIKE '__h%';
+O/P:
++-----+----------+------------+------------+--------------------+-----------+
+| eid | empname  | department | contactno  | emailid            | empheadid |
++-----+----------+------------+------------+--------------------+-----------+
+| 101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+| 103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+| 104 | Rahul    | E-102      | 1234567890 | rahul@yahoo.com    |       105 |
+| 105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
++-----+----------+------------+------------+--------------------+-----------+
+
+Que 12:  Select the department name of the company which is assigned to the employee whose employee id is 
+grater 103.
+query : select * from EmpDept where DeptId>'E-103';
++--------+----------+----------+----------+
+| DeptId | DeptName | Dept_off | DeptHead |
++--------+----------+----------+----------+
+| E-104  | Sales    | Sunday   |      104 |
+| E-105  | Purchage | Tuesday  |      104 |
++--------+----------+----------+----------+
+
+Que 13 : Select the name of the employee who is working under Abhishek.
+query :select * from Employee empname where empheadid=105;
+O/P:
++-----+---------+------------+------------+-----------------+-----------+
+| eid | empname | department | contactno  | emailid         | empheadid |
++-----+---------+------------+------------+-----------------+-----------+
+| 101 | Isha    | E-101      | 1234567890 | isha@gmail.com  |       105 |
+| 104 | Rahul   | E-102      | 1234567890 | rahul@yahoo.com |       105 |
++-----+---------+------------+------------+-----------------+-----------+
+
+Que 14 : Select the name of the employee who is department head of HR.
+query :select * from EmpDept empname where DeptName='HR';
+O/P:
++--------+----------+----------+----------+
+| DeptId | DeptName | Dept_off | DeptHead |
++--------+----------+----------+----------+
+| E-101  | HR       | Monday   |      105 |
++--------+----------+----------+----------+
+
+Que 15 :  Select the name of the employee head who is permanent.
+query : select empname from Employee where empheadid=any(select EmpId from EmpSalary where IsPermanent='Yes');
+O/P:
++----------+
+| empname  |
++----------+
+| Isha     |
+| Neha     |
+| Rahul    |
+| Abhishek |
++----------+
+
+Que 16 :Select the name and email of the Dept Head who is not Permanent.
+query :select empname,emailid from Employee where empheadid=any(select EmpId from EmpSalary where IsPermanent='No');
+O/P:
++---------+-----------------+
+| empname | emailid         |
++---------+-----------------+
+| Priya   | priya@yahoo.com |
++---------+-----------------+
+
+Que 17 : select the employee whose department off is Monday
+query :select * from EmpDept empname where Dept_off='Monday';
+O/P:
++--------+----------+----------+----------+
+| DeptId | DeptName | Dept_off | DeptHead |
++--------+----------+----------+----------+
+| E-101  | HR       | Monday   |      105 |
++--------+----------+----------+----------+
+
+Que 18 :select the Indian clients details.
+query :select clientname from ClientTable where cid in(select cid from Country where cname='india');
+O/P:
++------------+
+| clientname |
++------------+
+| ABC Group  |
+| PQR        |
++------------+
+
+Que 19: select the details of all employee working in development department.
+query :select * from Employee where department='E-102';
+O/P:
++-----+---------+------------+------------+-----------------+-----------+
+| eid | empname | department | contactno  | emailid         | empheadid |
++-----+---------+------------+------------+-----------------+-----------+
+| 104 | Rahul   | E-102      | 1234567890 | rahul@yahoo.com |       105 |
++-----+---------+------------+------------+-----------------+-----------+
